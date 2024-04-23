@@ -6,6 +6,7 @@ import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By 
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions
@@ -18,7 +19,9 @@ class TestSearch():
   def setup_method(self, method):
     options = Options()
     options.add_argument("--headless")
-    self.driver = webdriver.Chrome(options=options)
+    service = Service('/home/zheying/chromedriver')
+    
+    self.driver = webdriver.Chrome(options=options, service=service)
     self.vars = {}
   
   def teardown_method(self, method):
@@ -32,4 +35,3 @@ class TestSearch():
     self.driver.find_element(By.NAME, "btnK").click()
     time.sleep(5)
     allure.attach(self.driver.get_screenshot_as_png(), name="Google_Search_SS", attachment_type=allure.attachment_type.PNG)
-  
